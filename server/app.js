@@ -7,6 +7,7 @@ process.env.NODE_CONFIG_DIR = __dirname + '/config/';
 var express = require('express');
 var config = require('config');
 var cors = require('cors');
+var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
@@ -29,21 +30,21 @@ var dbOptions = {
 };
 
 // Events on db connection
-mongoose.connection.on('error', function(err) {
+mongoose.connection.on('error', function (err) {
   console.error('MongoDB connection error. Please make sure MongoDB is running. -> ' + err);
 });
 
-mongoose.connection.on('disconnected', function() {
+mongoose.connection.on('disconnected', function () {
   console.error('MongoDB connection disconnected.')
 });
 
-mongoose.connection.on('reconnected', function() {
+mongoose.connection.on('reconnected', function () {
   console.error('MongoDB connection reconnected.')
 });
 
 // Connect to db
-var connectWithRetry = function() {
-  return mongoose.connect(mongodbUrl, dbOptions, function(err) {
+var connectWithRetry = function () {
+  return mongoose.connect(mongodbUrl, dbOptions, function (err) {
     if (err) {
       console.error('Failed to connect to mongo on startup - retrying in 5 sec. -> ' + err);
       setTimeout(connectWithRetry, 5000);
@@ -70,10 +71,18 @@ app.use(routes);
 // Static files
 app.use('/', express.static(__dirname + '/../public'));
 
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/../public/index.html'), function (err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
+
 // Once database open, start server
 mongoose.connection.once('open', function callback() {
   console.log('Connection with database succeeded.');
-  app.listen(config.APP_PORT, function() {
+  app.listen(config.APP_PORT, function () {
     console.log('app listening on port %d in %s mode', this.address().port, app.settings.env);
   });
 });

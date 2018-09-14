@@ -15,23 +15,23 @@ class HelpMap extends Component {
     }
 
     componentDidMount() {
-        if(navigator.geolocation) {
+        if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 let coords = {
                     lat: 0,
                     lng: 0
                 };
-        
+
                 coords.lat = position.coords.latitude;
                 coords.lng = position.coords.longitude;
-        
-                this.setState({userLocation: coords});
+
+                this.setState({ userLocation: coords });
             });
         }
-       
+
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         console.log('HelpMap: componentWillUnmount');
     }
 
@@ -45,19 +45,20 @@ class HelpMap extends Component {
         )
 
         return (
-                <div>
-                    <MapComponent
-                    containerElement={ <div style={{ height: `720px` }} /> }
-                    mapElement={ <div style={{ height: `100%` }} /> }
-                    />
+            <div>
+                <MapComponent
+                    containerElement={<div style={{ height: `720px` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                />
 
 
-                        <div className="help-button-container">
-                            <Link className="btn btn-primary btn-block help-button" to="/helpmap">Help</Link>
-                        </div>
-  
-                    
+                <div className="help-button-container btn-group">
+                    <Link className="btn btn-danger waves-effect waves-light help-button" to="/helpform?seeker=true">Need Help</Link>
+                    <Link className="btn btn-default waves-effect waves-light help-button" to="/helpform?volunteer=true">Offer Help</Link>
                 </div>
+
+
+            </div>
 
         );
     }

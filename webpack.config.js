@@ -35,12 +35,12 @@ module.exports = {
             {
                 test: /\.(png|jpg|gif)$/,
                 use: [
-                  {
-                    loader: 'file-loader',
-                    options: {}
-                  }
+                    {
+                        loader: 'file-loader',
+                        options: {}
+                    }
                 ]
-              }
+            }
         ]
     },
     plugins: [
@@ -48,7 +48,7 @@ module.exports = {
     ],
     output: {
         filename: 'app.js',
-        path: __dirname + '/build'
+        path: __dirname + '/public'
     },
-    devtool: 'eval-source-map'
+    devtool: 'source-map'
 };
