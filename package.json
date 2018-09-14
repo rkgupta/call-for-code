@@ -1,0 +1,46 @@
+{
+  "name": "react-basic-route",
+  "version": "1.0.0",
+  "description": "React frontend app with basic routing example",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "body-parser": "^1.15.0",
+    "bootstrap": "^4.0.0-alpha.6",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "font-awesome": "^4.7.0",
+    "hammerjs": "^2.0.8",
+    "html-webpack-plugin": "^2.30.1",
+    "mdbreact": "4.7.1",
+    "mongoose": "^4.4.7",
+    "normalize.css": "^7.0.0",
+    "popper.js": "^1.12.9",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-google-maps": "9.4.5",
+    "react-router-dom": "^4.2.2",
+    "react-spinners": "^0.2.6",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.0.1",
+    "@babel/plugin-proposal-class-properties": "7.0.0",
+    "@babel/preset-env": "7.0.0",
+    "@babel/preset-react": "7.0.0",
+    "babel-loader": "8.0.2",
+    "css-loader": "^0.28.9",
+    "file-loader": "2.0.0",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.20.1"
+  }
+}

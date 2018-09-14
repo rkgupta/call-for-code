@@ -1,0 +1,19 @@
+{
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "modules": false,
+          "targets": {
+            "browsers": "> 1%",
+            "uglify": true,
+            "node": "current"
+          }
+        }
+      ],
+      "@babel/preset-react"
+    ],
+    "plugins" : [
+        "@babel/plugin-proposal-class-properties"
+    ]
+  }
