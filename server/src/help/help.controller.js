@@ -10,7 +10,13 @@ var Help = require('./help.model');
  *
  */
 exports.find = function (req, res, next) {
-    Help.find(function (err, helps) {
+    Help.find({ location :{ $near :
+        { $geometry :
+          { type : "Point" ,
+            coordinates : req.body.location.coordinates ,
+            $maxDistance : 5000
+        } }
+    }}, function (err, helps) {
         if (err) {
             return next(err);
         }
