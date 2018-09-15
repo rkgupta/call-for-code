@@ -7,6 +7,7 @@ class HelpForm extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(props);
 
         this.state = {
             searchInProgress: false,
@@ -27,28 +28,29 @@ class HelpForm extends React.Component {
 
     onSubmit = () => {
         this.setState({ searchInProgress: true });
-        axios.post('/api/help', {
-            ...this.state
+        axios.post('/api/helps', {
+            ...this.state,
+            location: {
+                type: 'Point',
+                coordinates: [this.props.location.state.location.lng, this.props.location.state.location.lat]
+            }
         }).then((response) => {
             this.setState({ searchInProgress: false });
             // Navigate to search result page or not found page
             const res = response.data;
-            if (res.data.records.length === 0) {
-                this.props.history.push({ pathname: '/error' });
-            } else {
+            if (res._id) {
                 this.props.history.push({
                     pathname: '/helpmap',
                     state: {
-                        marker: {...this.state}
+                        userMarker: { ...this.state },
+                        role: this.state.role
                     }
                 });
             }
-
-        })
-            .catch(error => {
-                this.setState({ searchInProgress: false });
-                this.props.history.push({ pathname: '/error' });
-            });
+        }).catch(error => {
+            this.setState({ searchInProgress: false });
+            this.props.history.push({ pathname: '/error' });
+        });
     }
 
     handleInputChange = (event) => {
@@ -56,7 +58,7 @@ class HelpForm extends React.Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        this.setState({ [name]: value});
+        this.setState({ [name]: value });
     }
 
     handleHelpRadioChange = (event) => {
@@ -69,10 +71,8 @@ class HelpForm extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.location.search);
-        let param = this.props.location.search;
-        let isSeeker = param.indexOf('seeker') > -1;
-        this.setState({ role: (isSeeker) ? ROLE_SEEKER : ROLE_VOLUNTEER });
+        console.log(this.props.location.state);
+        this.setState({ role: this.props.location.state.role });
     }
 
     render() {
@@ -88,8 +88,8 @@ class HelpForm extends React.Component {
                                     <form>
                                         <p className="h5 text-center mb-4">Enter your Details</p>
                                         <div className="grey-text">
-                                            <Input name="name" label="Your name" icon="user" group type="text" validate error="wrong" success="right" value={this.state.name} onChange={this.handleInputChange}/>
-                                            <Input name="age" label="Your age" icon="user" group type="text" validate error="wrong" success="right" value={this.state.age} onChange={this.handleInputChange}/>
+                                            <Input name="name" label="Your name" icon="user" group type="text" validate error="wrong" success="right" value={this.state.name} onChange={this.handleInputChange} />
+                                            <Input name="age" label="Your age" icon="user" group type="text" validate error="wrong" success="right" value={this.state.age} onChange={this.handleInputChange} />
                                             <label>Gender</label>
                                             <select name="gender" value={this.state.gender} onChange={this.handleInputChange} className="mdb-select md-form help-select">
                                                 <option value="M">Male</option>
@@ -98,7 +98,7 @@ class HelpForm extends React.Component {
                                             </select>
 
 
-                                            <Input name="phone" label="Your phone no" icon="phone" group type="text" validate error="wrong" success="right" value={this.state.phone} onChange={this.handleInputChange}/>
+                                            <Input name="phone" label="Your phone no" icon="phone" group type="text" validate error="wrong" success="right" value={this.state.phone} onChange={this.handleInputChange} />
                                             <p>What help do you need</p>
                                             <div>
                                                 <p><label>
@@ -140,7 +140,7 @@ class HelpForm extends React.Component {
                                             </div>
                                         </div>
                                         <div className="text-center">
-                                            <Button color="danger" on-click={this.onSubmit}>Submit</Button>
+                                            <Button color="danger" onClick={this.onSubmit}>Submit</Button>
                                         </div>
                                     </form>
                                 }
@@ -149,10 +149,10 @@ class HelpForm extends React.Component {
                                     <form>
                                         <p className="h5 text-center mb-4">Enter your Details</p>
                                         <div className="grey-text">
-                                            <Input name="name" label="Your name" icon="user" group type="text" validate error="wrong" success="right" value={this.state.name} onChange={this.handleInputChange}/>
-                                            <Input name="age" label="Your age" icon="user" group type="text" validate error="wrong" success="right" value={this.state.age} onChange={this.handleInputChange}/>
-                                            <Input name="organization" label="Your organization" icon="user" group type="text" validate error="wrong" success="right" value={this.state.organization} onChange={this.handleInputChange}/>
-                                            <Input name="phone" label="Your phone no" icon="phone" group type="text" validate error="wrong" success="right" value={this.state.phone} onChange={this.handleInputChange}/>
+                                            <Input name="name" label="Your name" icon="user" group type="text" validate error="wrong" success="right" value={this.state.name} onChange={this.handleInputChange} />
+                                            <Input name="age" label="Your age" icon="user" group type="text" validate error="wrong" success="right" value={this.state.age} onChange={this.handleInputChange} />
+                                            <Input name="organization" label="Your organization" icon="user" group type="text" validate error="wrong" success="right" value={this.state.organization} onChange={this.handleInputChange} />
+                                            <Input name="phone" label="Your phone no" icon="phone" group type="text" validate error="wrong" success="right" value={this.state.phone} onChange={this.handleInputChange} />
                                             <p>What help do you need</p>
                                             <div>
                                                 <p><label>
