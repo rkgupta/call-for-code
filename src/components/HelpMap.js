@@ -137,7 +137,7 @@ class HelpMap extends Component {
                 {
                     this.state.seachingHelp &&
                     <div className="search-spinner">
-                        <Spinner name="ball-scale-multiple" color="cyan" />
+                        <Spinner name="ball-scale-multiple" color="goldenrod" />
                     </div>
 
                 }
