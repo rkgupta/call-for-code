@@ -32,7 +32,10 @@
     "react-spinkit": "^3.0.0",
     "react-spinners": "^0.2.6",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1"
+    "webpack-dev-server": "^2.11.1",
+    "watson-developer-cloud": "^3.7.1",
+    "cfenv": "^1.1.0",
+    "dotenv": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.0.1",
